@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -58,26 +58,91 @@ export default function Home() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (formData.websiteTypes.length === 0) {
+      toast.error('Pilih minimal satu jenis website');
+      return;
+    }
+
+    if (!formData.logoStatus) {
+      toast.error('Pilih status logo (sudah ada atau minta dibuatkan)');
+      return;
+    }
+
+    if (!formData.photoStatus) {
+      toast.error('Pilih status foto produk/layanan');
+      return;
+    }
+
+    if (!formData.domain) {
+      toast.error('Pilih ekstensi domain yang diinginkan');
+      return;
+    }
+
+    if (!formData.hostingStatus) {
+      toast.error('Pilih status hosting');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/orders', {
+      // Siapkan pesan WhatsApp
+      const whatsappMessage = `*PEMESANAN WEBSITE BARU - MEOWLABS.ID*
+━━━━━━━━━━━━━━━━━━━━━
+
+*DATA PEMESAN*
+👤 Nama: ${formData.fullName}
+🏢 Nama Usaha: ${formData.businessName}
+📱 WhatsApp: ${formData.whatsapp}
+📧 Email: ${formData.email}
+
+*JENIS WEBSITE*
+${formData.websiteTypes.map(type => `✓ ${type}`).join('\n')}
+
+*INFORMASI KONTEN*
+📄 Jumlah Halaman: ${formData.pageCount || 'Belum ditentukan'}
+🎨 Logo: ${formData.logoStatus}
+📸 Foto Produk/Layanan: ${formData.photoStatus}
+
+*DOMAIN & HOSTING*
+🌐 Domain: ${formData.domain}
+🖥️ Hosting: ${formData.hostingStatus}
+
+*DESAIN & PREFERENSI*
+🎨 Warna Utama: ${formData.mainColor || 'Belum ditentukan'}
+🔗 Referensi Website: ${formData.referenceWebsite || '-'}
+
+*CATATAN KHUSUS*
+${formData.specialNotes || '-'}
+
+━━━━━━━━━━━━━━━━━━━━━
+_Pemesanan dikirim dari Form Meowlabs.id_`;
+
+      // Encode message untuk URL
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      const whatsappUrl = `https://wa.me/6281223648245?text=${encodedMessage}`;
+      
+      // Simpan ke database di background (optional)
+      fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        toast.success('Pemesanan berhasil dikirim!');
-      } else {
-        throw new Error('Gagal mengirim pemesanan');
-      }
+      }).catch(err => console.log('Background save failed:', err));
+      
+      // Langsung buka WhatsApp
+      window.open(whatsappUrl, '_blank');
+      
+      // Set sukses
+      setIsSubmitted(true);
+      toast.success('Mengarahkan ke WhatsApp...');
+      
     } catch (error) {
+      console.error('Submit error:', error);
       toast.error('Terjadi kesalahan, silakan coba lagi');
     } finally {
       setIsSubmitting(false);
