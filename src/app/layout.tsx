@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   keywords: ["Meowlabs", "web development", "website", "Next.js", "TypeScript", "Indonesia", "jasa website", "company profile", "e-commerce"],
   authors: [{ name: "Meowlabs.id Team" }],
   icons: {
-    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">⚡</text></svg>',
+    icon: '/logo.png',
   },
   openGraph: {
     title: "Meowlabs.id - Professional Web Development",
@@ -27,11 +27,20 @@ export const metadata: Metadata = {
     url: "https://meowlabs.id",
     siteName: "Meowlabs.id",
     type: "website",
+    images: [
+      {
+        url: '/logo.png',
+        width: 800,
+        height: 600,
+        alt: 'Meowlabs.id Logo',
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Meowlabs.id - Professional Web Development",
     description: "Transformasi digital untuk bisnis Anda dengan website modern, cepat, dan profesional",
+    images: ['/logo.png'],
   },
 };
 

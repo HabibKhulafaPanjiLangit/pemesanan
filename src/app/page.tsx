@@ -199,9 +199,7 @@ _Pemesanan dikirim dari Form Meowlabs.id_`;
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-black" />
-              </div>
+              <img src="/logo.png" alt="Meowlabs.id" className="w-10 h-10 rounded-lg object-contain bg-white p-1" />
               <h1 className="text-2xl font-bold text-green-400">Meowlabs.id</h1>
             </div>
             <Badge variant="outline" className="border-green-500/50 text-green-400">
@@ -537,9 +535,7 @@ _Pemesanan dikirim dari Form Meowlabs.id_`;
       <footer className="border-t border-green-500/20 bg-gray-900/50 py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center">
-              <Zap className="w-4 h-4 text-black" />
-            </div>
+            <img src="/logo.png" alt="Meowlabs.id" className="w-8 h-8 rounded-lg object-contain bg-white p-1" />
             <span className="text-green-400 font-bold">Meowlabs.id</span>
           </div>
           <p className="text-gray-400">
